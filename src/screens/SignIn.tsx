@@ -1,9 +1,11 @@
-import { Center, Text } from "native-base";
+import { Center } from "native-base";
+
+import Logo from "../assets/logo.svg";
 
 export function SignIn() {
 	return (
 		<Center flex={1} bg="gray.900">
-			<Text color="white">SignIn</Text>
+			<Logo />
 		</Center>
 	);
 }
