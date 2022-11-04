@@ -8,7 +8,8 @@ import {
 
 import { AuthContextProvider } from "./src/contexts/AuthContext";
 
-import { Polls } from "./src/screens/Polls";
+import { Routes } from "./src/routes";
+
 import { Loading } from "./src/components/Loading";
 
 import { THEME } from "./src/styles/theme";
@@ -29,7 +30,7 @@ export default function App() {
 					translucent
 				/>
 
-				{fontsLoaded ? <Polls /> : <Loading />}
+				{fontsLoaded ? <Routes /> : <Loading />}
 			</AuthContextProvider>
 		</NativeBaseProvider>
 	);
