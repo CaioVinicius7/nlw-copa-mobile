@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { Toast, VStack } from "native-base";
+import { Share } from "react-native";
+import { HStack, Toast, VStack } from "native-base";
 import { useRoute } from "@react-navigation/native";
 
 import { Header } from "../components/Header";
@@ -7,6 +8,7 @@ import { Loading } from "../components/Loading";
 import { PollCardProps } from "../components/PollCard";
 import { PollHeader } from "../components/PollHeader";
 import { EmptyMyPoolList } from "../components/EmptyMyPoolList";
+import { Option } from "../components/Option";
 
 import { api } from "../services/api";
 
@@ -15,6 +17,9 @@ interface RouteParams {
 }
 
 export function Details() {
+	const [optionSelected, setOptionSelected] = useState<"guesses" | "ranking">(
+		"guesses"
+	);
 	const [isLoading, setIsLoading] = useState(true);
 	const [pollDetails, setPollDetails] = useState<PollCardProps>(
 		{} as PollCardProps
@@ -43,6 +48,12 @@ export function Details() {
 		}
 	}
 
+	async function handleCodeShare() {
+		await Share.share({
+			message: pollDetails.code
+		});
+	}
+
 	useEffect(() => {
 		fetchPollsDetails();
 	}, [id]);
@@ -53,11 +64,29 @@ export function Details() {
 
 	return (
 		<VStack flex={1} bg="gray.900">
-			<Header title={pollDetails.title} showBackButton showShareButton />
+			<Header
+				title={pollDetails.title}
+				onShare={handleCodeShare}
+				showBackButton
+				showShareButton
+			/>
 
 			{pollDetails._count?.participants > 0 ? (
 				<VStack flex={1} px={5}>
 					<PollHeader data={pollDetails} />
+
+					<HStack bgColor="gray.800" p={1} rounded="sm" mb={5}>
+						<Option
+							title="Seus palpites"
+							isSelected={optionSelected === "guesses"}
+							onPress={() => setOptionSelected("guesses")}
+						/>
+						<Option
+							title="Ranking do grupo"
+							isSelected={optionSelected === "ranking"}
+							onPress={() => setOptionSelected("ranking")}
+						/>
+					</HStack>
 				</VStack>
 			) : (
 				<EmptyMyPoolList code={pollDetails.code} />
