@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { FlatList, Icon, Toast, VStack } from "native-base";
 import { Octicons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
 
 import { Button } from "../components/Button";
 import { Header } from "../components/Header";
@@ -36,9 +36,11 @@ export function Polls() {
 		}
 	}
 
-	useEffect(() => {
-		fetchPolls();
-	}, []);
+	useFocusEffect(
+		useCallback(() => {
+			fetchPolls();
+		}, [])
+	);
 
 	return (
 		<VStack flex={1} bgColor="gray.900">
@@ -68,12 +70,12 @@ export function Polls() {
 					data={polls}
 					keyExtractor={(item) => item.id}
 					renderItem={({ item }) => <PollCard data={item} />}
-					px={5}
 					showsVerticalScrollIndicator={false}
+					ListEmptyComponent={() => <EmptyPoolList />}
 					_contentContainerStyle={{
 						paddingBottom: 10
 					}}
-					ListEmptyComponent={() => <EmptyPoolList />}
+					px={5}
 				/>
 			)}
 		</VStack>
