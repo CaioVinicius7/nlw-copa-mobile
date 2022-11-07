@@ -3,14 +3,16 @@ import { FlatList, Toast } from "native-base";
 
 import { Loading } from "./Loading";
 import { Game, GameProps } from "./Game";
+import { EmptyMyPoolList } from "./EmptyMyPoolList";
 
 import { api } from "../services/api";
 
 interface GuessesProps {
 	pollId: string;
+	code: string;
 }
 
-export function Guesses({ pollId }: GuessesProps) {
+export function Guesses({ pollId, code }: GuessesProps) {
 	const [isLoading, setIsLoading] = useState(true);
 	const [games, setGames] = useState<GameProps[]>([]);
 	const [firstTeamPoints, setFirstTeamPoints] = useState("");
@@ -96,6 +98,7 @@ export function Guesses({ pollId }: GuessesProps) {
 			_contentContainerStyle={{
 				paddingBottom: 100
 			}}
+			ListEmptyComponent={() => <EmptyMyPoolList code={code} />}
 		/>
 	);
 }

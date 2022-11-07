@@ -89,7 +89,7 @@ export function Details() {
 						/>
 					</HStack>
 
-					<Guesses pollId={pollDetails.id} />
+					<Guesses pollId={pollDetails.id} code={pollDetails.code} />
 				</VStack>
 			) : (
 				<EmptyMyPoolList code={pollDetails.code} />
