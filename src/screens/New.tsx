@@ -26,7 +26,7 @@ export function New() {
 			setIsLoading(true);
 
 			await api.post("/polls", {
-				title
+				title: title.toUpperCase()
 			});
 
 			Toast.show({
