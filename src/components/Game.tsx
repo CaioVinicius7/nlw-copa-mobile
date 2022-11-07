@@ -1,6 +1,8 @@
 import { Button, HStack, Text, useTheme, VStack } from "native-base";
 import { X, Check } from "phosphor-react-native";
 import { getName } from "country-list";
+import dayjs from "dayjs";
+import ptBR from "dayjs/locale/pt-br";
 
 import { Team } from "./Team";
 
@@ -15,6 +17,7 @@ interface GuessProps {
 
 export interface GameProps {
 	id: string;
+	date: string;
 	firstTeamCountryCode: string;
 	secondTeamCountryCode: string;
 	guess: null | GuessProps;
@@ -35,6 +38,12 @@ export function Game({
 }: Props) {
 	const { colors, sizes } = useTheme();
 
+	const when = dayjs(data.date)
+		.locale(ptBR)
+		.format("DD [de] MMMM [de] YYYY [ás] HH:00[h]");
+
+	const gameAlreadyPassed = dayjs(data.date).isBefore(new Date());
+
 	return (
 		<VStack
 			w="full"
@@ -52,7 +61,7 @@ export function Game({
 			</Text>
 
 			<Text color="gray.200" fontSize="xs">
-				22 de Novembro de 2022 às 16:00h
+				{when}
 			</Text>
 
 			<HStack
@@ -76,7 +85,7 @@ export function Game({
 				/>
 			</HStack>
 
-			{!data.guess && (
+			{!data.guess && !gameAlreadyPassed ? (
 				<Button
 					size="xs"
 					w="full"
@@ -92,7 +101,9 @@ export function Game({
 						<Check color={colors.white} size={sizes[4]} />
 					</HStack>
 				</Button>
-			)}
+			) : null}
+
+			{gameAlreadyPassed && <Text color="red.500"> Jogo já encerrado </Text>}
 		</VStack>
 	);
 }
