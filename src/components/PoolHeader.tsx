@@ -1,6 +1,6 @@
 import { Heading, HStack, Text, VStack } from "native-base";
 
-import { PoolPros } from "./PoolCard";
+import { PoolPros } from "./PollCard";
 import { Participants } from "./Participants";
 
 interface PoolHeaderProps {
