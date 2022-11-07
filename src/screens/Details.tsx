@@ -9,6 +9,7 @@ import { PollCardProps } from "../components/PollCard";
 import { PollHeader } from "../components/PollHeader";
 import { EmptyMyPoolList } from "../components/EmptyMyPoolList";
 import { Option } from "../components/Option";
+import { Guesses } from "../components/Guesses";
 
 import { api } from "../services/api";
 
@@ -17,10 +18,10 @@ interface RouteParams {
 }
 
 export function Details() {
+	const [isLoading, setIsLoading] = useState(true);
 	const [optionSelected, setOptionSelected] = useState<"guesses" | "ranking">(
 		"guesses"
 	);
-	const [isLoading, setIsLoading] = useState(true);
 	const [pollDetails, setPollDetails] = useState<PollCardProps>(
 		{} as PollCardProps
 	);
@@ -87,6 +88,8 @@ export function Details() {
 							onPress={() => setOptionSelected("ranking")}
 						/>
 					</HStack>
+
+					<Guesses pollId={pollDetails.id} />
 				</VStack>
 			) : (
 				<EmptyMyPoolList code={pollDetails.code} />

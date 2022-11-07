@@ -35,6 +35,7 @@
 	},
 	"devDependencies": {
 		"@babel/core": "^7.12.9",
+		"@types/country-list": "^2.1.1",
 		"react-native-svg-transformer": "^1.0.0"
 	},
 	"resolutions": {
